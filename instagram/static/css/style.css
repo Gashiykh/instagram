@@ -1,0 +1,33 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.phone{
+    padding: 70px;
+    height: 650px;
+    float: right;
+    margin: 10px;
+    margin-top: 20px;
+}
+
+.right-column{
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    width: 350px;
+    margin: 10px;
+    padding: 40px;
+}
+
+.inst-logo{
+   margin: 15px auto; 
+   width: 250px;
+   height: 100px;
+}
+
+.info {
+    font-weight: bold;
+    line-height: 20px;
+    font-size: 17px;
+    color: #999;
+}

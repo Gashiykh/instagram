@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <img class="phone" src="{% static 'img/phone.png' %}" alt="Phone">
+            </div>
+            <div class="col-sm-6">
+                <div class="right-column text-center">
+                    <img class="inst-logo" src="{% static 'img/instagram-logo.png' %}" alt="instagram-logo">
+                    <p class="info">Зарегистрируйтесь, чтобы смотреть фото и видео ваших друзей.</p>
+                    <hr>
+                    <form action="{% url 'register' %}" method="post">
+                        {% csrf_token %}
+
+                        {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">{{ error }}</div>
+                        {% endfor %}
+
+                        <div class="form-group">
+                            <input class="form-control" type="text" id="username" name="username" placeholder="Логин">
+                            {% for error in form.username.errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="email" id="email" name="email" placeholder="Эл. адрес">
+                            {% for error in form.email.errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="password" name="password1" id="password1" placeholder="Пароль">
+                            {% for error in form.password1.errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="password" name="password2" id="password2" placeholder="Пароль">
+                            {% for error in form.password2.errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="first_name" id="first_name" placeholder="Имя">
+                            {% for error in form.first_name.errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="description" id="description" placeholder="О себе">
+                            {% for error in form.description.errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="phone_number" id="phone_number" placeholder="Моб. телефон">
+                            {% for error in form.phone_number.errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="gender" id="gender">
+                                <option value="" selected>Выберите пол</option>
+                                <option value="M">Мужской</option>
+                                <option value="F">Женский</option>
+                            </select>
+                            {% for error in form.gender.errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                       
+                        <div class="form-group">
+                            <label>Аватар</label>
+                            {{ form.avatar }}
+                            {% for error in form.avatar.errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <button class="btn btn-info">Регистрация</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
