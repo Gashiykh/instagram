@@ -31,3 +31,9 @@
     font-size: 17px;
     color: #999;
 }
+
+.avatar {
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+}
