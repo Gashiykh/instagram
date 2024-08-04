@@ -6,7 +6,7 @@ class Post(models.Model):
     author=models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='posts', verbose_name='Автор')
     description = models.TextField(verbose_name='Описание')
     like_count = models.PositiveIntegerField(default=0, verbose_name='Количество лайков')
-    comment_count = models = models.PositiveIntegerField(default=0, verbose_name='Количество комментариев')
+    comment_count = models.PositiveIntegerField(default=0, verbose_name='Количество комментариев')
 
 
 class Image(models.Model):
