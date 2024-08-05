@@ -37,3 +37,24 @@
     height: 80px;
     width: 80px;
 }
+
+.big-avatar {
+    height: 160px;
+    width: 160px;
+}
+
+.carousel-indicators li {
+    background-color: initial;
+    border: thin solid white;
+    border-radius: 50%;
+    height: 6px;
+    width: 6px;
+}
+
+.carousel-indicators .active {
+    background-color: white;
+}
+
+.status {
+    font-size: .8rem;
+}
