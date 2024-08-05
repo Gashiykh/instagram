@@ -7,6 +7,7 @@ class Post(models.Model):
     description = models.TextField(verbose_name='Описание')
     like_count = models.PositiveIntegerField(default=0, verbose_name='Количество лайков')
     comment_count = models.PositiveIntegerField(default=0, verbose_name='Количество комментариев')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
 
     def __str__(self):
         return '{} - {}'.format(self.author, self.description[:20])
@@ -18,6 +19,7 @@ class Image(models.Model):
 
     def __str__(self) -> str:
         return f'{self.post}: {self.image}'
+
 
 class Comment(models.Model):
     post = models.ForeignKey('webapp.Post', related_name='comments', on_delete=models.CASCADE, verbose_name='Пост')
