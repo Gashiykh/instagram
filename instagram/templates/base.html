@@ -9,46 +9,27 @@
     <title>Document</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container">
-          <a class="navbar-brand" href="{% url 'home' %}">Instagram</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#navbarSupportedContent"
-                  aria-controls="navbarSupportedContent"
-                  aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary nav-color">
+        <div class="container white-bg" >
+
+          <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+            <img src="{% static '/img/instagram_logo.png' %}" class="logo">
+            <img src="{% static '/img/instagram_text_logo.png' %}" class="logo_text">
+          </a>
+
           <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button"
-                   data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-              </li>
-            </ul>
+
             <form class="d-flex" role="search" method="get" action="{% url 'search' %}">
               <input class="form-control me-2" type="search"
-                     placeholder="Search" aria-label="Search"
+                     placeholder="⌕ Поиск" aria-label="Search"
                      name="search_string">
-              <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
           </div>
+
+          <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+            <img src="{% static '/img/user_login_icon.png' %}" class="user_login_icon">
+          </a>
+
         </div>
       </nav>
       <div class="container">
@@ -56,7 +37,15 @@
 
         {% endblock %}
       </div>
-    <script src="{% static 'js/jquery-3.7.1.slim.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'js/jquery-3.7.1.slim.min.js' %}"></script>
+      <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+    <script>
+      $("#openModalBtn").click(
+        () => {
+          $("#modal").toggle()
+        }
+      )
+    </script>
 </body>
 </html>
