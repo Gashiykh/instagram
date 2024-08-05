@@ -5,6 +5,12 @@ from webapp.models import Post, Image
 from webapp.forms import PostForm, ImageForm
 
 
+class PostListView(generic.ListView):
+    model = Post
+    template_name = 'posts/list.html'
+    context_object_name = 'posts'
+
+
 class PostCreateView(generic.CreateView):
     model = Post
     form_class = PostForm
@@ -38,4 +44,4 @@ class PostCreateView(generic.CreateView):
         return super().form_valid(form)
     
     def get_success_url(self):
-        return reverse('home')
+        return reverse('posts')
