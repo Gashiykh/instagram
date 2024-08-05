@@ -19,5 +19,11 @@ class FollowView(View):
                 follower.save()
                 following.follower_count += 1
                 following.save()
+            else:
+                follower.following_count -= 1
+                follower.save()
+                following.follower_count -= 1
+                following.save()
+                follow.delete()
 
         return redirect('profile', user_id=user_id)

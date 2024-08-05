@@ -8,11 +8,17 @@
     <div>
         <div class="row align-items-center">
             <span class="py-2" style="font-size: 1.5rem;">{{ object.username }}</span>
-            <a href="{% url 'profile' request.user.id %}"
+            {% if request.user == object %}
+            <a href="{% url 'profile' object.id %}"
                class="btn btn-light mx-3">Редактировать профиль</a>
-            {% if request.user != object %}
-            <a href="{% url 'follow' object.id %}"
-               class="btn btn-light mx-3">Подписаться</a>
+            {% else %}
+            <a href="{% url 'follow' object.id %}" class="btn btn-light mx-3">
+            {% if follows %}
+                Отписаться
+            {% else %}
+                Подписаться
+            {% endif %}
+            </a>
             {% endif %}
         </div>
         <div class="row">
@@ -36,33 +42,13 @@
         </div>
     </div>
 </div>
-{% for post in object.posts.all %}
-{% with counter=forloop.counter0 %}
-<div class="row w-25 justify-content-center my-4 pt-5">
-    <div id="carouselIndicators{{ counter }}" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            {% for image in post.images.all %}
-            <li data-target="#carouselIndicators{{ counter }}"
-                data-slide-to="{{ forloop.counter0 }}"
-                {% if forloop.first %}
-                class="active"
-                {% endif %}
-            ></li>
-            {% endfor %}
-        </ol>
-        <div class="carousel-inner">
-            {% for image in post.images.all %}
-            <div class="carousel-item
-                {% if forloop.first %}
-                active
-                {% endif %}
-                ">
-                <img src="{{ MEDIA_URL }}{{ image.image }}" class="d-block mx-auto">
-            </div>
-            {% endfor %}
+<div class="container mt-5">
+    <div class="row row-cols-sm-3">
+        {% for post in object.posts.all %}
+        <div>
+            <img src="{{ MEDIA_URL }}{{ post.images.all.0.image }}" class="">
         </div>
+        {% endfor %}
     </div>
 </div>
-{% endwith %}
-{% endfor %}
 {% endblock %}
