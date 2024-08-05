@@ -3,10 +3,13 @@ from django.contrib.auth import get_user_model
 
 
 class Post(models.Model):
-    author=models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='posts', verbose_name='Автор')
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='posts', verbose_name='Автор')
     description = models.TextField(verbose_name='Описание')
     like_count = models.PositiveIntegerField(default=0, verbose_name='Количество лайков')
     comment_count = models.PositiveIntegerField(default=0, verbose_name='Количество комментариев')
+
+    def __str__(self):
+        return '{} - {}'.format(self.author, self.description[:20])
 
 
 class Image(models.Model):
@@ -30,3 +33,6 @@ class Follow(models.Model):
     follower = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='following', verbose_name='Подписчик')
     following = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='followers', verbose_name='Подписка')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+
+    class Meta:
+        unique_together = [['follower', 'following']]
