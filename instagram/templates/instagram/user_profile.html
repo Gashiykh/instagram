@@ -4,6 +4,7 @@
 <div class="container d-flex flex-column align-items-center mt-5">
     <div class="my-4">
         <span>{{ object.username }}</span>
+        <a href="{% url 'follow' object.id %}">Подписаться</a>
     </div>
     <div>
         <img src="{{ MEDIA_URL }}{{ user.avatar }}" class="avatar big-avatar">

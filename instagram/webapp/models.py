@@ -33,3 +33,6 @@ class Follow(models.Model):
     follower = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='following', verbose_name='Подписчик')
     following = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='followers', verbose_name='Подписка')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+
+    class Meta:
+        unique_together = [['follower', 'following']]
