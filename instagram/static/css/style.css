@@ -1,6 +1,16 @@
 *{
     margin: 0;
     padding: 0;
+    background: #FAFAFA;
+}
+
+.nav-color{
+    background: white;
+    border-bottom: 1px solid #E1E1E1;
+}
+
+.white-bg{
+    background: white
 }
 
 .phone{
@@ -50,6 +60,15 @@
     height: 50px;
     padding-left: 20px;
     padding-top: 5px;
+}
+
+.user_login_icon {
+    height: 20px;
+
+}
+
+::placeholder {
+   text-align: center;
 }
 
 
