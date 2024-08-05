@@ -16,6 +16,8 @@ class Image(models.Model):
     post = models.ForeignKey('webapp.Post', related_name='images', on_delete=models.CASCADE, verbose_name='Пост')
     image = models.ImageField(upload_to='post_images', verbose_name='Изображение')
 
+    def __str__(self) -> str:
+        return f'{self.post}: {self.image}'
 
 class Comment(models.Model):
     post = models.ForeignKey('webapp.Post', related_name='comments', on_delete=models.CASCADE, verbose_name='Пост')
