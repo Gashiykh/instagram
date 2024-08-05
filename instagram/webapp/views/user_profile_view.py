@@ -16,6 +16,8 @@ class UserProfileView(DetailView):
             Follow.objects.get(follower=self.request.user, following=self.object)
         except Follow.DoesNotExist:
             context['follows'] = False
+        except TypeError:
+            context['follows'] = False
         else:
             context['follows'] = True
 
