@@ -3,9 +3,9 @@
 {% block content %}
 <div class="container d-flex mt-5 p-4">
     <div class="col-sm-3">
-        <img src="{{ MEDIA_URL }}{{ user.avatar }}" class="avatar big-avatar">
+        <img src="{{ MEDIA_URL }}{{ user.avatar }}" class="avatar w-75">
     </div>
-    <div>
+    <div class="col-sm-9">
         <div class="row align-items-center">
             <span class="py-2" style="font-size: 1.5rem;">{{ object.username }}</span>
             {% if request.user == object %}
@@ -43,9 +43,9 @@
     </div>
 </div>
 <div class="container mt-5">
-    <div class="row row-cols-sm-3">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
         {% for post in object.posts.all %}
-        <div>
+        <div class="p-3">
             <img src="{{ MEDIA_URL }}{{ post.images.all.0.image }}" class="">
         </div>
         {% endfor %}

@@ -1,4 +1,4 @@
-*{
+*, body {
     margin: 0;
     padding: 0;
     background: #FAFAFA;
@@ -42,13 +42,6 @@
     color: #999;
 }
 
-.avatar {
-    border-radius: 50%;
-    height: 80px;
-    width: 80px;
-}
-
-
 .logo {
     height: 25px;
     padding-right: 20px;
@@ -71,10 +64,13 @@
    text-align: center;
 }
 
+.avatar {
+    border-radius: 50%;
+}
 
 .big-avatar {
-    height: 160px;
-    width: 160px;
+    max-height: 160px;
+    max-width: 160px;
 }
 
 .carousel-indicators li {
