@@ -1,18 +1,22 @@
 from django.urls import path
 
-from webapp import views
+from webapp.views import IndexListView, UserSearchView, FollowView
+from webapp.views import PostCreateView, PostView, PostListView, LikeView
+from webapp.views import UserProfileView
 
 
 urlpatterns = [
-    path('', views.IndexListView.as_view(), name='home'),
-    path('search/', views.UserSearchView.as_view(), name='search'),
+    path('', IndexListView.as_view(), name='home'),
+    path('search/', UserSearchView.as_view(), name='search'),
     path(
         'profile/<int:user_id>/',
-        views.UserProfileView.as_view(),
+        UserProfileView.as_view(),
         name='profile'
     ),
-    path('follow/<int:user_id>/', views.FollowView.as_view(), name='follow'),
-    path('add_post/', views.PostCreateView.as_view(), name='add_post'),
-    path('posts/', views.PostListView.as_view(), name='posts'),
-    path('posts/<int:post_id>', views.PostView.as_view(), name='post'),
+    path('follow/<int:user_id>/', FollowView.as_view(), name='follow'),
+    path('add_post/', PostCreateView.as_view(), name='add_post'),
+    path('posts/', PostListView.as_view(), name='posts'),
+    path('posts/<int:post_id>', PostView.as_view(), name='post'),
+    path('like/<int:post_id>/', LikeView.as_view(), name='like-post'),
+
 ]

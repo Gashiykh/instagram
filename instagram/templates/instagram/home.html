@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<div class="container mt-5">
-    {% include 'posts/list.html' %}
+<div class="container w-75 mt-5">
+    {% include 'posts/posts_list.html' %}
 </div>
 {% if recommended_posts %}
-<h5 class="my-5">Рекомендации</h5>
+<h5 class="w-75 my-5">Рекомендации</h5>
 <div class="container mt-5">
-    {% include 'posts/list.html' with posts=recommended_posts %}
+    {% include 'posts/posts_list.html' with posts=recommended_posts %}
 </div>
 {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/like.js' %}"></script>
 {% endblock %}

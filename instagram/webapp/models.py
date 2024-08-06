@@ -23,14 +23,14 @@ class Image(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey('webapp.Post', related_name='comments', on_delete=models.CASCADE, verbose_name='Пост')
-    author=models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='comments', verbose_name='Автор')
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='comments', verbose_name='Автор')
     text = models.TextField(verbose_name='Комментарии')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
 
 
 class Like(models.Model):
-    post = models.ForeignKey('webapp.Post', related_name='likes', on_delete=models.CASCADE, verbose_name='Пост')
-    author=models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='likes', verbose_name='Автор')
+    post = models.ForeignKey('webapp.Post', related_name='post_likes', on_delete=models.CASCADE, verbose_name='Пост')
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='user_likes', verbose_name='Автор')
 
 
 class Follow(models.Model):

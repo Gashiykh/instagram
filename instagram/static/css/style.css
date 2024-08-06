@@ -69,8 +69,8 @@
 }
 
 .post-avatar {
-    height: 64px;
-    width: 64px;
+    height: 48px;
+    width: 48px;
 }
 
 .carousel-indicators li {
@@ -101,33 +101,42 @@
     bottom: -3rem;
 }
 
-#heart {
-  position: relative;
-  width: 25px;
-  height: 22px;
-  margin-top: 10px;
+.heart {
+    display: inline-block;
+    position: relative;
+    width: 25px;
+    height: 22px;
+    margin-top: 10px;
+    cursor: pointer;
 }
 
-#heart::before, #heart::after {
+.heart::before, .heart::after {
   content: "";
   position: absolute;
   top: 0;
   width: 13px;
   height: 20px;
   border-radius: 12px 12px 0 0;
-  background: red;
 }
 
-#heart::before {
+.heart::before {
   left: 12px;
   transform: rotate(-45deg);
   transform-origin: 0 100%;
 }
 
-#heart::after {
+.heart::after {
   left: 0;
   transform: rotate(45deg);
   transform-origin: 100% 100%;
+}
+
+.heart.liked::before, .heart.liked::after {
+    background-color: red;
+}
+
+.heart.unliked::before, .heart.unliked::after {
+    background-color: #cccccc;
 }
 
 .without-border {
