@@ -1,10 +1,10 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import generic
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login
 
-from accounts.forms import MyUserCreationForm
+from accounts.forms import MyUserCreationForm, LoginForm
 
 
 class RegisterView(generic.CreateView):
@@ -28,3 +28,15 @@ class RegisterView(generic.CreateView):
         return next_url
         
 
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        form.request = request  
+        if form.is_valid():
+            user = form.get_user()
+            if user:
+                login(request, user)
+                return redirect('home')  
+    else:
+        form = LoginForm()
+    return render(request, 'accounts/login.html', {'form': form})
