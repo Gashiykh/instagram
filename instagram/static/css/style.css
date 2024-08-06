@@ -1,7 +1,6 @@
 *{
     margin: 0;
     padding: 0;
-    background: #FAFAFA;
 }
 
 .nav-color{
@@ -9,6 +8,9 @@
     border-bottom: 1px solid #E1E1E1;
 }
 
+.grey-bg {
+    background: #FAFAFA;
+}
 .white-bg{
     background: white
 }
@@ -91,4 +93,19 @@
 
 .status {
     font-size: .8rem;
+}
+
+.heart {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.heart.liked {
+    background-color: red;
+}
+
+.heart.unliked {
+    background-color: gray;
 }

@@ -1,15 +1,67 @@
-
 {% extends 'base.html' %}
 
 {% block content %}
+    {% for post in posts %}
+        <div>
+            <h1>{{ post.author }}</h1>
+            {% if post.author.avatar %}
+                <img src="{{ post.author.avatar.url }}" width="300" height="300" alt="Аватар">
+            {% else %}
+                <p>Нету</p>
+            {% endif %}
+            <p>{{ post.description }}</p>
+            <p>Likes: <span id="like-count-{{ post.id }}">{{ post.like_count }}</span> | Comments: {{ post.comment_count }}</p>
 
-    {% for user_obj in user_objs %}
-        <h1>{{ user_obj }}</h1>
-        {% if user_obj.avatar %}
-            <img src="{{ user_obj.avatar.url }}" width="300" height="300" alt="Аватар">
-        {% else %}
-            <p>Нету</p>
-        {% endif %}
+            <div
+                id="heart-{{ post.id }}"
+                class="heart
+                {% if request.user in post.post_likes.all %} liked
+                {% else %} unliked
+                {% endif %}"
+                post-id="{{ post.id }}"
+            ></div>
+        </div>
     {% endfor %}
+{% endblock %}
 
+{% block extra_js %}
+<script>
+(function() {
+    async function ServerCall(uri) {
+        const response = await fetch(uri, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        return data;
+    };
+
+    async function heartClick(event) {
+        let heart = event.target;
+        let postId = heart.getAttribute("post-id");
+
+        const data = await ServerCall(`/like/${postId}/`);
+
+        if (data.success) {
+            const likeCountElement = document.getElementById(`like-count-${postId}`);
+            likeCountElement.textContent = data.like_count;
+
+            if (data.liked) {
+                heart.classList.remove("unliked");
+                heart.classList.add("liked");
+            } else {
+                heart.classList.remove("liked");
+                heart.classList.add("unliked");
+            }
+        }
+    }
+
+    document.querySelectorAll(".heart").forEach(heart => {
+        heart.addEventListener("click", heartClick);
+    });
+})();
+</script>
 {% endblock %}
