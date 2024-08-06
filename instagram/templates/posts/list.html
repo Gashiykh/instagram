@@ -1,7 +1,10 @@
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
     {% for post in posts %}
     <div class="p-1">
-        <img src="{{ MEDIA_URL }}{{ post.images.all.0.image }}" class="w-100">
+        <a href="{% url 'post' post.id %}">
+            <img src="{{ MEDIA_URL }}{{ post.images.all.0.image }}"
+                 class="w-100">
+        </a>
     </div>
     {% endfor %}
 </div>
