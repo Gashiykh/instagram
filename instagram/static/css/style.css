@@ -4,6 +4,10 @@
     background: #FAFAFA;
 }
 
+body {
+    min-height: 100vh;
+}
+
 .nav-color{
     background: white;
     border-bottom: 1px solid #E1E1E1;

@@ -1,9 +1,11 @@
 {% for post in posts %}
 <div class="card bg-white-children my-4">
     <div class="card-header d-flex align-items-center justify-content-between py-2">
-        <div >
-            <img src="{{ MEDIA_URL }}{{ post.author.avatar }}" class="avatar post-avatar">
-            <span class="ml-3">{{ post.author.username }}</span>
+        <div class="position-relative">
+            <a href="{% url 'profile' post.author.id %}" class="stretched-link text-decoration-none text-body">
+                <img src="{{ MEDIA_URL }}{{ post.author.avatar }}" class="avatar post-avatar">
+                <span class="ml-3">{{ post.author.username }}</span>
+            </a>
         </div>
         <div>
             <span>•••</span>
