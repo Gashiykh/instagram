@@ -8,36 +8,36 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Document</title>
 </head>
-<body class="bg-secondary">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary nav-color bg-light">
-        <div class="container" >
+<body class="main-page-bg">
+<nav class="navbar navbar-expand-lg bg-body-tertiary nav-color bg-light">
+    <div class="container">
 
-          <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
             <img src="{% static '/img/instagram_logo.png' %}" class="logo">
             <img src="{% static '/img/instagram_text_logo.png' %}" class="logo_text">
-          </a>
+        </a>
 
-          <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
+        <div class="col-5 collapse navbar-collapse flex-grow-0 ml-4" id="navbarSupportedContent">
 
-            <form class="d-flex" role="search" method="get" action="{% url 'search' %}">
-              <input class="form-control my-2" type="search" id="id-search"
-                     placeholder="⌕ Поиск" aria-label="Search"
-                     name="search_string">
+            <form class="d-flex " role="search" method="get" action="{% url 'search' %}">
+                <input class="form-control my-2 " type="search" id="id-search"
+                       placeholder="⌕ Поиск" aria-label="Search"
+                       name="search_string">
             </form>
-          </div>
-
-          <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
-            <img src="{% static '/img/user_login_icon.png' %}" class="user_login_icon">
-          </a>
-
         </div>
-      </nav>
-      <div class="container">
-        {% block content %}
-        {% endblock %}
-      </div>
-    <script src="{% static 'js/jquery-3.7.1.slim.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    {% block extra_js %}{% endblock %}
+
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+            <img src="{% static '/img/user_login_icon.png' %}" class="user_login_icon">
+        </a>
+
+    </div>
+</nav>
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+<script src="{% static 'js/jquery-3.7.1.slim.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+{% block extra_js %}{% endblock %}
 </body>
 </html>

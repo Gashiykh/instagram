@@ -1,67 +1,67 @@
 {% for post in posts %}
-<div class="card bg-white-children my-4">
-    <div class="card-header d-flex align-items-center justify-content-between py-2">
-        <div >
-            <img src="{{ MEDIA_URL }}{{ post.author.avatar }}" class="avatar post-avatar">
-            <span class="ml-3">{{ post.author.username }}</span>
+    <div class="card bg-white-children my-4 col-12" style="width: 30rem;">
+        <div class="card-header d-flex align-items-center justify-content-between py-2">
+            <div>
+                <img src="{{ MEDIA_URL }}{{ post.author.avatar }}" class="avatar post-avatar">
+                <span class="ml-3">{{ post.author.username }}</span>
+            </div>
+            <div>
+                <span>•••</span>
+            </div>
         </div>
-        <div>
-            <span>•••</span>
-        </div>
-    </div>
-    <div class="card-body p-0">
-        <div id="carouselIndicators" class="carousel slide">
-            <ol class="carousel-indicators">
-                {% for image in post.images.all %}
-                <li data-target="#carouselIndicators"
-                data-slide-to="{{ forloop.counter0 }}"
-                {% if forloop.first %}
-                class="active"
-                {% endif %}
-                ></li>
-                {% endfor %}
-            </ol>
-            <div class="carousel-inner">
-                {% for image in post.images.all %}
-                <div class="carousel-item
+        <div class="card-body p-0">
+            <div id="carouselIndicators" class="carousel slide">
+                <ol class="carousel-indicators">
+                    {% for image in post.images.all %}
+                        <li data-target="#carouselIndicators"
+                            data-slide-to="{{ forloop.counter0 }}"
+                                {% if forloop.first %}
+                            class="active"
+                                {% endif %}
+                        ></li>
+                    {% endfor %}
+                </ol>
+                <div class="carousel-inner">
+                    {% for image in post.images.all %}
+                        <div class="carousel-item
                     {% if forloop.first %}
                     active
                     {% endif %}
                     ">
-                    <img src="{{ MEDIA_URL }}{{ image.image }}"
-                         class="d-block w-100">
+                            <img src="{{ MEDIA_URL }}{{ image.image }}"
+                                 class="d-block w-100">
+                        </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
-        </div>
-        <div class="px-3">
-            <div class="d-flex">
-                <div id="heart-{{ post.id }}" post-id="{{ post.id }}"
-                     class="heart
+            <div class="px-3">
+                <div class="d-flex">
+                    <div id="heart-{{ post.id }}" post-id="{{ post.id }}"
+                         class="heart
                     {% if post.liked %}
                     liked
                     {% else %}
                     unliked
                     {% endif %}"
                     ></div>
-                <div class="comment"></div>
+                    <div class="comment"></div>
+                </div>
+                <div>
+                    <span id="like-count-{{ post.id }}">{{ post.like_count }}</span>
+                    отметок "Нравится"
+                </div>
+                <div class="my-2 multiline">{{ post.description }}</div>
+                <div>37 минут назад</div>
             </div>
-            <div>
-                <span id="like-count-{{ post.id }}">{{ post.like_count }}</span>
-                отметок "Нравится"
-            </div>
-            <div class="my-2 multiline">{{ post.description }}</div>
-            <div>37 минут назад</div>
+        </div>
+        <div class="card-footer text-muted">
+            <form class="d-flex justify-content-between" method="post"
+                  action="{% url 'post' post.id %}">
+                <input class="col-8 col-sm-9 without-border" name="comment" type="text"
+                       placeholder="Добавьте комментарий...">
+                <input class="without-border text-right" type="submit"
+                       value=Опубликовать>
+            </form>
         </div>
     </div>
-    <div class="card-footer text-muted">
-    <form class="d-flex justify-content-between" method="post"
-          action="{% url 'post' post.id %}">
-        <input class="col-8 col-sm-9 without-border" name="comment" type="text"
-               placeholder="Добавьте комментарий...">
-        <input class="without-border text-right" type="submit"
-               value=Опубликовать>
-    </form>
-    </div>
-</div>
 {% endfor %}
