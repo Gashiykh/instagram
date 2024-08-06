@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <img class="phone" src="{% static 'img/phone_logo.png' %}" alt="Phone">
+            </div>
+            <div class="col-sm-6 mt-5">
+                <div class="right-column text-center">
+                    <img class="inst-logo" src="{% static 'img/instagram_text_logo.png' %}" alt="instagram-logo">
+                    <p class="info">Зарегистрируйтесь, чтобы смотреть фото и видео ваших друзей.</p>
+                    <hr>
+                    <form action="{% url 'login' %}" method="post">
+                        {% csrf_token %}
+
+                        {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">{{ error }}</div>
+                        {% endfor %}
+
+                        <div class="form-group mb-2">
+                            <input class="form-control" type="text" id="username_or_email" name="username_or_email" placeholder="Логин или Email">
+                            {% for error in form.username_or_email.errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group mb-2">
+                            <input class="form-control" type="password" name="password" id="password" placeholder="Пароль">
+                            {% for error in form.password.errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <button class="btn btn-info">Авторизация</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
