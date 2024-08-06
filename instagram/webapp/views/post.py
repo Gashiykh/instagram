@@ -5,6 +5,13 @@ from webapp.models import Post, Image
 from webapp.forms import PostForm, ImageForm
 
 
+class PostView(generic.DetailView):
+    context_object_name = 'post'
+    model = Post
+    pk_url_kwarg = 'post_id'
+    template_name = 'posts/post.html'
+
+
 class PostListView(generic.ListView):
     model = Post
     template_name = 'posts/list.html'

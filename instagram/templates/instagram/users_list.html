@@ -3,18 +3,18 @@
 {% block content %}
 <div class="container">
 {% if users %}
-{% for user in users %}
+{% for f_user in users %}
 <div class="row py-3">
-    <a href="{% url 'profile' user.id %}" class="d-flex align-items-center w-100">
+    <a href="{% url 'profile' f_user.id %}" class="d-flex align-items-center w-100">
         <div class="col-sm-2 d-flex justify-content-center">
-            <img src="{{ MEDIA_URL }}{{ user.avatar }}" class="avatar">
+            <img src="{{ MEDIA_URL }}{{ f_user.avatar }}" class="avatar">
         </div>
         <div class="col-sm-3">
             <div>
-                <p class="">{{ user.username }}</p>
+                <p class="">{{ f_user.username }}</p>
             </div>
             <div>
-                <small>{{ user.get_full_name }}</small>
+                <small>{{ f_user.get_full_name }}</small>
             </div>
         </div>
     </a>

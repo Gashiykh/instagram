@@ -1,4 +1,4 @@
-*{
+*, body {
     margin: 0;
     padding: 0;
     background: #FAFAFA;
@@ -42,13 +42,6 @@
     color: #999;
 }
 
-.avatar {
-    border-radius: 50%;
-    height: 80px;
-    width: 80px;
-}
-
-
 .logo {
     height: 25px;
     padding-right: 20px;
@@ -67,28 +60,76 @@
 
 }
 
-::placeholder {
+#id-search::placeholder {
    text-align: center;
 }
 
+.avatar {
+    border-radius: 50%;
+}
 
-.big-avatar {
-    height: 160px;
-    width: 160px;
+.post-avatar {
+    height: 64px;
+    width: 64px;
 }
 
 .carousel-indicators li {
-    background-color: initial;
-    border: thin solid white;
+    background-color: #dbdbdb;
     border-radius: 50%;
-    height: 6px;
-    width: 6px;
+    height: 8px;
+    width: 8px;
 }
 
 .carousel-indicators .active {
-    background-color: white;
+    background-color: #3897f0;
+}
+
+.multiline {
+    white-space: pre-wrap;
 }
 
 .status {
     font-size: .8rem;
+}
+
+.bg-white-children * {
+    background-color: white;
+}
+
+.carousel-indicators {
+    background-color: initial;
+    bottom: -3rem;
+}
+
+#heart {
+  position: relative;
+  width: 25px;
+  height: 22px;
+  margin-top: 10px;
+}
+
+#heart::before, #heart::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 13px;
+  height: 20px;
+  border-radius: 12px 12px 0 0;
+  background: red;
+}
+
+#heart::before {
+  left: 12px;
+  transform: rotate(-45deg);
+  transform-origin: 0 100%;
+}
+
+#heart::after {
+  left: 0;
+  transform: rotate(45deg);
+  transform-origin: 100% 100%;
+}
+
+.without-border {
+    border: unset;
 }
