@@ -13,12 +13,16 @@ class IndexListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        following = Follow.objects.filter(follower=self.request.user)
-        users = get_user_model().objects.filter(followers__in=following)
-        context['posts'] = (Post.objects.filter(author__in=users)
-                            .order_by('-created_at'))
+        if self.request.user.is_authenticated:
+            following = Follow.objects.filter(follower=self.request.user)
+            users = get_user_model().objects.filter(followers__in=following)
+            context['posts'] = (Post.objects.filter(author__in=users)
+                                .order_by('-created_at'))
 
-        users = get_user_model().objects.exclude(followers__in=following)
-        context['recommended_posts'] = Post.objects.filter(author__in=users)
+            users = get_user_model().objects.exclude(followers__in=following)
+            context['recommended_posts'] = Post.objects.filter(author__in=users)
+
+        else:
+            context['recommended_posts'] = False
 
         return context
