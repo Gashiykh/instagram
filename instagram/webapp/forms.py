@@ -1,7 +1,8 @@
 from django import forms
 from django.forms import modelformset_factory
 
-from webapp.models import Post, Image
+from webapp.models import Post, Image, Comment
+
 
 
 class UserSearchForm(forms.Form):
@@ -36,3 +37,7 @@ class ImageForm(forms.Form):
     images = MultipleFileField(label='Выберите картинки', required=False)
 
 
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']

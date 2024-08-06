@@ -109,6 +109,10 @@ body {
     cursor: pointer;
 }
 
+.main-page-bg{
+    background: #FAFAFA
+}
+
 .heart::before, .heart::after {
   content: "";
   position: absolute;

@@ -1,8 +1,10 @@
-from django.urls import reverse
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse, reverse_lazy
 from django.views import generic
+from django.views.generic import CreateView
 
-from webapp.models import Post, Image
-from webapp.forms import PostForm, ImageForm
+from webapp.models import Post, Image, Comment
+from webapp.forms import PostForm, ImageForm, CommentForm
 
 
 class PostView(generic.DetailView):
@@ -31,12 +33,11 @@ class PostCreateView(generic.CreateView):
             context['image_form'] = ImageForm()
         return context
 
-
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.author = self.request.user
         self.object.save()
-        
+
         context = self.get_context_data()
         image_form = context['image_form']
         if image_form.is_valid():
@@ -49,6 +50,27 @@ class PostCreateView(generic.CreateView):
         user.save()
 
         return super().form_valid(form)
-    
+
     def get_success_url(self):
         return reverse('posts')
+
+
+class CommentCreateView(CreateView):
+    model = Comment
+    form_class = CommentForm
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.post_id = self.kwargs['post_id']
+        form.save()
+        post_id = self.kwargs['post_id']
+        comment_text = form.cleaned_data['text']
+        if 'from_home' in self.request.GET:
+            return redirect(f'/?user_comment_post={post_id}&comment_text={comment_text}')
+        return redirect(reverse_lazy('post', kwargs={
+            'post_id': post_id}) + f'?user_comment_post={post_id}&comment_text={comment_text}')
+
+    def get_success_url(self):
+        if self.request.GET.get('from_home'):
+            return reverse_lazy('home')
+        return reverse_lazy('post', kwargs={'pk': self.object.post.id})
