@@ -54,6 +54,16 @@
                 <div>{{ post.created_at|date:"d M, H:i" }}</div>
             </div>
         </div>
+        <div class="my-2">
+             <a class="text-decoration-none ml-3">Посмотреть все комментарии</a>
+        </div>
+        <div class="comments-section">
+            {% if user_comment_post == post.id %}
+                <div class="comment">
+                    <strong class="ml-3">{{ request.user.username }}</strong> {{ comment_text }}<br>
+                </div>
+            {% endif %}
+        </div>
         <div class="card-footer text-muted">
             <form class="d-flex justify-content-between" method="post"
                   action="{% url 'add_comment' post.id %}?from_home=1">
@@ -63,12 +73,6 @@
                 <input class="without-border text-right" type="submit" value="Опубликовать">
             </form>
         </div>
-        <div class="comments-section">
-            {% if user_comment_post == post.id %}
-                <div class="comment">
-                    <strong>{{ request.user.username }}</strong> {{ comment_text }}<br>
-                </div>
-            {% endif %}
-        </div>
+
     </div>
 {% endfor %}
