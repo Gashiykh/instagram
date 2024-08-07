@@ -43,7 +43,7 @@
                 </a>
                 {% if request.user.is_authenticated %}
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{% url 'profile' request.user.is %}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'profile' request.user.id %}">Profile</a></li>
                     <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                   </ul>
                 {% else %}
