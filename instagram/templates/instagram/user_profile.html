@@ -43,6 +43,37 @@
     </div>
 </div>
 <div class="container mt-5">
-    {% include 'posts/list.html' with posts=object.posts.all %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+        {% for post in object.posts.all %}
+        <div class="p-1">
+            <a href="{% url 'post' post.id %}">
+                <div id="carInd{{ post.id }}" class="carousel slide">
+                    <ol class="carousel-indicators">
+                        {% for image in post.images.all %}
+                        <li data-target="#carInd{{ post.id }}"
+                        data-slide-to="{{ forloop.counter0 }}"
+                        {% if forloop.first %}
+                        class="active"
+                        {% endif %}
+                        ></li>
+                        {% endfor %}
+                    </ol>
+                    <div class="carousel-inner">
+                        {% for image in post.images.all %}
+                        <div class="carousel-item
+                            {% if forloop.first %}
+                            active
+                            {% endif %}
+                            ">
+                            <img src="{{ MEDIA_URL }}{{ image.image }}"
+                                 class="d-block w-100">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
