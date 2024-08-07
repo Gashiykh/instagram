@@ -1,3 +1,4 @@
+from django.db.models import F
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
@@ -56,8 +57,7 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
 
         user = self.request.user
 
-        # ToDo: переписать на F выражении
-        user.post_count = user.posts.count()
+        user.post_count = F('post_count') + 1
         user.save()
 
         return super().form_valid(form)
@@ -67,21 +67,25 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
 
 
 class CommentCreateView(LoginRequiredMixin, CreateView):
-    # ToDo: добавить инкремент счётчика комментариев у поста
-    # ToDo: реализовать проверку на существование поста
     model = Comment
     form_class = CommentForm
 
     def form_valid(self, form):
+        post = get_object_or_404(Post, id=self.kwargs['post_id'])
+
         form.instance.author = self.request.user
-        form.instance.post_id = self.kwargs['post_id']
+        form.instance.post_id = post.id
         form.save()
-        post_id = self.kwargs['post_id']
+
+        post.comment_count = F('comment_count') + 1
+        post.save()
+
         comment_text = form.cleaned_data['text']
         if 'from_home' in self.request.GET:
-            return redirect(f'/?user_comment_post={post_id}&comment_text={comment_text}')
+            return redirect(f'/?user_comment_post={post.id}&comment_text={comment_text}')
+
         return redirect(reverse_lazy('post', kwargs={
-            'post_id': post_id}) + f'?user_comment_post={post_id}&comment_text={comment_text}')
+            'post_id': post.id}) + f'?user_comment_post={post.id}&comment_text={comment_text}')
 
     def get_success_url(self):
         if self.request.GET.get('from_home'):
