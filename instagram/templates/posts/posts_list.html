@@ -55,7 +55,7 @@
             </div>
         </div>
         <div class="my-2">
-             <a class="text-decoration-none ml-3">Посмотреть все комментарии</a>
+            <a href="{% url 'post' post.id %}" class="text-decoration-none ml-3">Посмотреть все комментарии</a>
         </div>
         <div class="comments-section">
             {% if user_comment_post == post.id %}
