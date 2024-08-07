@@ -12,10 +12,10 @@
         </div>
     </div>
     <div class="card-body p-0">
-        <div id="carouselIndicators" class="carousel slide">
+        <div id="carInd{{ post.id }}" class="carousel slide">
             <ol class="carousel-indicators">
                 {% for image in post.images.all %}
-                <li data-target="#carouselIndicators"
+                <li data-target="#carInd{{ post.id }}"
                 data-slide-to="{{ forloop.counter0 }}"
                 {% if forloop.first %}
                 class="active"
@@ -46,32 +46,38 @@
                     unliked
                     {% endif %}"
                     ></div>
-                <div class="comment"></div>
+                    <div class="comment"></div>
+                </div>
+                <div>
+                    <span id="like-count-{{ post.id }}">{{ post.like_count }}</span>
+                    отметок "Нравится"
+                </div>
+                <div class="my-2 multiline">{{ post.description }}</div>
+                <div>{{ post.created_at|date:"d M, H:i" }}</div>
             </div>
-            <div>
-                <span id="like-count-{{ post.id }}">{{ post.like_count }}</span>
-                отметок "Нравится"
-            </div>
-            <div class="my-2 multiline">{{ post.description }}</div>
-            <div>{{ post.created_at|date:"d M, H:i" }}</div>
         </div>
-    </div>
-    <div class="card-footer text-muted">
-        <form class="d-flex justify-content-between" method="post"
-              action="{% url 'add_comment' post.id %}?from_home=1">
-            {% csrf_token %}
-            <input class="col-8 col-sm-9 without-border" name="text" type="text"
-                   placeholder="Добавьте комментарий...">
-            <input class="without-border text-right" type="submit"
-                   value="Опубликовать">
-        </form>
-    </div>
-    <div class="comments-section">
-        {% if user_comment_post == post.id %}
-        <div class="comment">
-            <strong>{{ request.user.username }}</strong> {{ comment_text }}<br>
+        <div class="my-2">
+            <a href="{% url 'post' post.id %}"
+               class="text-decoration-none ml-3">Посмотреть все комментарии</a>
         </div>
-        {% endif %}
+        <div class="comments-section">
+            {% if user_comment_post == post.id %}
+                <div class="comment mb-2">
+                    <strong class="ml-3">{{ request.user.username }}</strong>
+                    {{ comment_text }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="card-footer text-muted">
+            <form class="d-flex justify-content-between" method="post"
+                  action="{% url 'add_comment' post.id %}?from_home=1">
+                {% csrf_token %}
+                <input class="col-8 col-sm-9 without-border" name="text"
+                       type="text" placeholder="Добавьте комментарий...">
+                <input class="without-border text-right" type="submit"
+                       value="Опубликовать">
+            </form>
+        </div>
+
     </div>
-</div>
 {% endfor %}

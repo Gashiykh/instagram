@@ -1,66 +1,74 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="card bg-white-children">
-    <div class="card-header d-flex align-items-center justify-content-between">
-        <div>
-            <img src="{{ MEDIA_URL }}{{ post.author.avatar }}" class="avatar post-avatar">
-            <span class="ml-3">{{ post.author.username }}</span>
-        </div>
-        <div>
-            <span>•••</span>
-        </div>
-    </div>
-    <div class="card-body p-0">
-        <div id="carouselIndicators" class="carousel slide">
-            <ol class="carousel-indicators">
-                {% for image in post.images.all %}
-                <li data-target="#carouselIndicators"
-                data-slide-to="{{ forloop.counter0 }}"
-                {% if forloop.first %}
-                class="active"
-                {% endif %}
-                ></li>
-                {% endfor %}
-            </ol>
-            <div class="carousel-inner">
-                {% for image in post.images.all %}
-                <div class="carousel-item
-                    {% if forloop.first %}
-                    active
-                    {% endif %}
-                    ">
-                    <img src="{{ MEDIA_URL }}{{ image.image }}"
-                         class="d-block w-100">
+<div class="row">
+    <div class="col-md-8">
+        <div class="card bg-white-children">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <div>
+                    <img src="{{ MEDIA_URL }}{{ post.author.avatar }}" class="avatar post-avatar">
+                    <span class="ml-3">{{ post.author.username }}</span>
                 </div>
-                {% endfor %}
+                <div>
+                    <span>•••</span>
+                </div>
             </div>
-        </div>
-        <div class="px-3">
-            <div class="d-flex">
-                <div id="heart-{{ post.id }}" post-id="{{ post.id }}"
-                     class="heart
-                    {% if request.user in post.post_likes.all %}
-                    liked
-                    {% else %}
-                    unliked
-                    {% endif %}"
-                    ></div>
-                <div class="comment"></div>
+            <div class="card-body p-0">
+                <div id="carouselIndicators" class="carousel slide">
+                    <ol class="carousel-indicators">
+                        {% for image in post.images.all %}
+                            <li data-target="#carouselIndicators" data-slide-to="{{ forloop.counter0 }}"
+                                    {% if forloop.first %} class="active" {% endif %}>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                    <div class="carousel-inner">
+                        {% for image in post.images.all %}
+                            <div class="carousel-item {% if forloop.first %} active {% endif %}">
+                                <img src="{{ MEDIA_URL }}{{ image.image }}" class="d-block w-100">
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="px-3">
+                    <div class="d-flex">
+                        <div id="heart-{{ post.id }}" post-id="{{ post.id }}"
+                             class="heart {% if request.user in post.post_likes.all %} liked {% else %} unliked {% endif %}">
+                        </div>
+                        <div class="comment"></div>
+                    </div>
+                    <div>{{ post.like_count }} отметок "Нравится"</div>
+                    <div class="my-2 multiline">{{ post.description }}</div>
+                    <div>{{ post.created_at|date:"d M, H:i" }}</div>
+                </div>
             </div>
-            <div>{{ post.like_count }} отметок "Нравится"</div>
-            <div class="my-2 multiline">{{ post.description }}</div>
-            <div>37 минут назад</div>
         </div>
     </div>
-    <div class="card-footer text-muted">
-    <form class="d-flex justify-content-between" method="post"
-          action="{% url 'post' post.id %}">
-        <input class="col-8 col-sm-9 without-border" name="comment" type="text"
-               placeholder="Добавьте комментарий...">
-        <input class="without-border text-right" type="submit"
-               value=Опубликовать>
-    </form>
+    <div class="col-md-4">
+        <div class="card bg-white-children">
+            <div class="card-body">
+                <h4>Комментарии</h4>
+                {% if comments %}
+                    {% for comment in comments %}
+                        <div class="comment {% if comment.author == request.user %}user-comment{% endif %}">
+                            <strong>{{ comment.author.username }}</strong> {{ comment.text }}<br>
+                            <small>{{ comment.created_at|date:"d M, H:i" }}</small>
+                        </div>
+                        <hr>
+                    {% endfor %}
+                {% else %}
+                    <p>Пока нет комментариев. Будьте первым, кто прокомментирует!</p>
+                {% endif %}
+                <form method="post" action="{% url 'add_comment' post.id %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input class="form-control" name="text" type="text"
+                               placeholder="Добавьте комментарий...">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Опубликовать</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
