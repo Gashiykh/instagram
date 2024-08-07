@@ -145,3 +145,8 @@ body {
 .without-border {
     border: unset;
 }
+
+.dropdown-menu {
+    right: 0; 
+    left: auto; 
+}

@@ -27,12 +27,6 @@ class PostView(generic.DetailView):
         return context
 
 
-class PostListView(generic.ListView):
-    model = Post
-    template_name = 'posts/list.html'
-    context_object_name = 'posts'
-
-
 class PostCreateView(generic.CreateView):
     model = Post
     form_class = PostForm
