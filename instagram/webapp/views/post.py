@@ -3,8 +3,8 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.views.generic import CreateView
 
-from webapp.models import Post, Image, Comment
-from webapp.forms import PostForm, ImageForm, CommentForm
+from webapp.models import Comment, Image, Like, Post
+from webapp.forms import CommentForm, ImageForm, PostForm
 
 
 class PostView(generic.DetailView):
@@ -18,6 +18,12 @@ class PostView(generic.DetailView):
         post = self.get_object()
         comments = post.comments.all().order_by('created_at')
         context['comments'] = comments
+
+        post.liked = Like.objects.filter(
+                post=post.id,
+                author=self.request.user
+            ).exists()
+        context['post'] = post
         return context
 
 
