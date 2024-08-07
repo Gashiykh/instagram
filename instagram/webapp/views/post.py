@@ -8,10 +8,17 @@ from webapp.forms import PostForm, ImageForm, CommentForm
 
 
 class PostView(generic.DetailView):
-    context_object_name = 'post'
     model = Post
-    pk_url_kwarg = 'post_id'
     template_name = 'posts/post.html'
+    context_object_name = 'post'
+    pk_url_kwarg = 'post_id'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = self.get_object()
+        comments = post.comments.all().order_by('created_at')
+        context['comments'] = comments
+        return context
 
 
 class PostListView(generic.ListView):
