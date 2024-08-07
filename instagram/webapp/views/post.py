@@ -22,7 +22,7 @@ class PostView(generic.DetailView):
         post.liked = Like.objects.filter(
                 post=post.id,
                 author=self.request.user
-            ).exists()
+            ).exists() if self.request.user.is_authenticated else False
         context['post'] = post
         return context
 
