@@ -29,7 +29,7 @@ class PostView(generic.DetailView):
         return context
 
 
-class PostCreateView(generic.CreateView):
+class PostCreateView(LoginRequiredMixin, generic.CreateView):
     model = Post
     form_class = PostForm
     template_name = 'posts/create.html'
@@ -55,6 +55,8 @@ class PostCreateView(generic.CreateView):
                 Image.objects.create(post=self.object, image=image)
 
         user = self.request.user
+
+        # ToDo: переписать на F выражении
         user.post_count = user.posts.count()
         user.save()
 
@@ -64,7 +66,9 @@ class PostCreateView(generic.CreateView):
         return reverse('profile', kwargs={'user_id': self.request.user.id})
 
 
-class CommentCreateView(CreateView):
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    # ToDo: добавить инкремент счётчика комментариев у поста
+    # ToDo: реализовать проверку на существование поста
     model = Comment
     form_class = CommentForm
 
@@ -86,6 +90,7 @@ class CommentCreateView(CreateView):
 
 
 class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
+    # ToDo: реализовать проверку на существование поста
     model = Post
     pk_url_kwarg = 'post_id'
 
