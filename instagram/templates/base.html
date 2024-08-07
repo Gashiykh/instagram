@@ -41,20 +41,19 @@
                 <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="{% static '/img/user_login_icon.png' %}" class="user_login_icon">
                 </a>
-                {% if user.is_authenticated %}
+                {% if request.user.is_authenticated %}
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{% url 'profile' user_id=request.user.id %}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'profile' request.user.is %}">Profile</a></li>
                     <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                   </ul>
                 {% else %}
                   <ul class="dropdown-menu">
-                    <li"><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+                    <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
                     <li><a class="dropdown-item" href="{% url 'register' %}">Register</a></li>
                   </ul>
                 {% endif %}
             </li>
         </ul>
-        
 
     </div>
 </nav>
