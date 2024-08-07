@@ -2,6 +2,8 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.views.generic import CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 
 from webapp.models import Comment, Image, Like, Post
 from webapp.forms import CommentForm, ImageForm, PostForm
@@ -25,12 +27,6 @@ class PostView(generic.DetailView):
             ).exists() if self.request.user.is_authenticated else False
         context['post'] = post
         return context
-
-
-class PostListView(generic.ListView):
-    model = Post
-    template_name = 'posts/list.html'
-    context_object_name = 'posts'
 
 
 class PostCreateView(generic.CreateView):
@@ -65,7 +61,7 @@ class PostCreateView(generic.CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('posts')
+        return reverse('profile', kwargs={'user_id': self.request.user.id})
 
 
 class CommentCreateView(CreateView):
@@ -87,3 +83,17 @@ class CommentCreateView(CreateView):
         if self.request.GET.get('from_home'):
             return reverse_lazy('home')
         return reverse_lazy('post', kwargs={'pk': self.object.post.id})
+
+
+class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Post
+    pk_url_kwarg = 'post_id'
+
+    def dispatch(self, request, *args, **kwargs):
+        post = self.get_object()
+        if post.author != request.user:
+            raise PermissionDenied()
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse('home')

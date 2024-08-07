@@ -7,6 +7,16 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Document</title>
+    <style>
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        .dropdown-menu {
+            right: 0; 
+            left: auto; 
+        }
+    </style>
 </head>
 <body class="main-page-bg">
 <nav class="navbar navbar-expand-lg bg-body-tertiary nav-color bg-light">
@@ -26,9 +36,25 @@
             </form>
         </div>
 
-        <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
-            <img src="{% static '/img/user_login_icon.png' %}" class="user_login_icon">
-        </a>
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="{% static '/img/user_login_icon.png' %}" class="user_login_icon">
+                </a>
+                {% if user.is_authenticated %}
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'profile' user_id=request.user.id %}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                  </ul>
+                {% else %}
+                  <ul class="dropdown-menu">
+                    <li"><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+                    <li><a class="dropdown-item" href="{% url 'register' %}">Register</a></li>
+                  </ul>
+                {% endif %}
+            </li>
+        </ul>
+        
 
     </div>
 </nav>
@@ -38,6 +64,7 @@
 </div>
 <script src="{% static 'js/jquery-3.7.1.slim.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/bs.js' %}"></script>
 {% block extra_js %}{% endblock %}
 </body>
 </html>

@@ -29,7 +29,7 @@
                 {{ object.follower_count }} подписчиков
             </small>
             <small>
-                Подписки: {{ following_count }}
+                Подписки: {{ object.following_count }}
             </small>
         </div>
         <div class="row flex-column mt-4">
@@ -42,6 +42,9 @@
         </div>
     </div>
 </div>
+
+{% include 'posts/create.html' %}
+
 <div class="container mt-5">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
         {% for post in object.posts.all %}
@@ -76,4 +79,13 @@
         {% endfor %}
     </div>
 </div>
+{% endblock %}
+{% block extra_js %}
+<script>
+    $("#openModalBtn").click(
+      () => {
+        $("#modal").toggle()
+      }
+    )
+</script>
 {% endblock %}
