@@ -43,8 +43,9 @@
     </div>
 </div>
 
-{% include 'posts/create.html' %}
-
+{% if request.user == object %}
+    {% include 'posts/create.html' %}
+{% endif %}
 <div class="container mt-5">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
         {% for post in object.posts.all %}
