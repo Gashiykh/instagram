@@ -1,12 +1,16 @@
 from urllib.parse import parse_qs, urlparse
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login
 
 from accounts.forms import MyUserCreationForm, LoginForm
+from django.views.generic import UpdateView
+
+from accounts.forms import UserProfileForm
 
 
 class RegisterView(generic.CreateView):
@@ -54,3 +58,15 @@ def login_view(request):
         form = LoginForm()
 
     return render(request, 'accounts/login.html', {'form': form})
+
+
+class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = get_user_model()
+    form_class = UserProfileForm
+    template_name = 'instagram/edit_profile.html'
+
+    def get_success_url(self):
+        return reverse('profile', kwargs={'user_id': self.request.user.id})
+
+    def get_object(self, queryset=None):
+        return self.request.user
