@@ -73,6 +73,11 @@ body {
     border-radius: 50%;
 }
 
+.search-avatar {
+    height: 64px;
+    width: 64px;
+}
+
 .post-avatar {
     height: 48px;
     width: 48px;

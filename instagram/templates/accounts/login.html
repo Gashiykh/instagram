@@ -19,7 +19,7 @@
                     <img class="inst-logo" src="{% static 'img/instagram_text_logo.png' %}" alt="instagram-logo">
                     <p class="info">Зарегистрируйтесь, чтобы смотреть фото и видео ваших друзей.</p>
                     <hr>
-                    <form action="{% url 'login' %}" method="post">
+                    <form action="{% url 'login' %}?next={{ request.GET.next }}" method="post">
                         {% csrf_token %}
 
                         {% for error in form.non_field_errors %}

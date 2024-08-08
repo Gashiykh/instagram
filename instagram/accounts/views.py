@@ -1,3 +1,5 @@
+from urllib.parse import parse_qs, urlparse
+
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import generic
@@ -30,12 +32,23 @@ class RegisterView(generic.CreateView):
 
 def login_view(request):
     if request.method == 'POST':
+        parsed_uri = urlparse(request.build_absolute_uri())
+        query = {key: value[0]
+                 for key, value in
+                 parse_qs(parsed_uri.query).items()}
+
+        next_url = query.get('next')
+
         form = LoginForm(request.POST)
         form.request = request  
         if form.is_valid():
             user = form.get_user()
             if user:
                 login(request, user)
+
+                if next_url:
+                    return redirect(next_url)
+
                 return redirect('home')  
     else:
         form = LoginForm()

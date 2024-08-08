@@ -5,13 +5,15 @@
 {% if users %}
 {% for f_user in users %}
 <div class="row py-3">
-    <a href="{% url 'profile' f_user.id %}" class="d-flex align-items-center w-100">
+    <a href="{% url 'profile' f_user.id %}"
+       class="d-flex align-items-center w-100">
         <div class="col-sm-2 d-flex justify-content-center">
-            <img src="{{ MEDIA_URL }}{{ f_user.avatar }}" class="avatar">
+            <img src="{{ MEDIA_URL }}{{ f_user.avatar }}"
+                 class="avatar search-avatar">
         </div>
         <div class="col-sm-3">
             <div>
-                <p class="">{{ f_user.username }}</p>
+                <span>{{ f_user.username }}</span>
             </div>
             <div>
                 <small>{{ f_user.get_full_name }}</small>

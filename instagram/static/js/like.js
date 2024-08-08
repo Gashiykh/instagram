@@ -23,6 +23,11 @@
                 heart.classList.remove("liked");
                 heart.classList.add("unliked");
             }
+        } else {
+            if (data.error === "login_required") {
+                let queryString = window.location.href.toString().split(window.location.host)[1];
+                window.location.href = window.location.origin + data.login_url + "?next=" + queryString;
+            }
         }
     }
 
