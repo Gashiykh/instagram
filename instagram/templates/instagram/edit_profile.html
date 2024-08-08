@@ -2,11 +2,9 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2>Редактировать профиль</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-    </form>
+    <h2 class="text-center">Редактировать профиль</h2>
+
+        {% include 'partial/form.html' with request_method='post' btn_text='Редактировать'%}
+
 </div>
 {% endblock %}

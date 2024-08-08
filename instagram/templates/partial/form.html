@@ -1,5 +1,5 @@
 {% if not fields_only %}
-    <form action="{{ action_url|default:'' }}" method="{{ request_method| default:'get' }}">
+    <form action="{{ action_url|default:'' }}" method="{{ request_method| default:'get' }}" enctype="multipart/form-data">
     {% csrf_token %}
 {% endif %}
 
