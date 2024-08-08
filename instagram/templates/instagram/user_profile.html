@@ -9,7 +9,7 @@
         <div class="row align-items-center">
             <span class="py-2" style="font-size: 1.5rem;">{{ object.username }}</span>
             {% if request.user == object %}
-            <a href="{% url 'profile' object.id %}"
+            <a href="{% url 'edit_profile' %}"
                class="btn btn-light mx-3">Редактировать профиль</a>
             {% else %}
             <a href="{% url 'follow' object.id %}" class="btn btn-light mx-3">
