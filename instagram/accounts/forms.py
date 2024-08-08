@@ -36,3 +36,12 @@ class LoginForm(forms.Form):
 
     def get_user(self):
         return getattr(self, 'user', None)
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = get_user_model()
+        fields = [
+            'username', 'email', 'avatar',
+            'first_name', 'description', 'phone_number', 'gender'
+        ]
