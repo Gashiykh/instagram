@@ -10,6 +10,8 @@ from django.contrib.auth import login
 from accounts.forms import MyUserCreationForm, LoginForm
 from django.views.generic import UpdateView
 
+from accounts.forms import UserProfileForm
+
 
 class RegisterView(generic.CreateView):
     model = get_user_model()
@@ -60,7 +62,7 @@ def login_view(request):
 
 class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = get_user_model()
-    form_class = MyUserCreationForm
+    form_class = UserProfileForm
     template_name = 'instagram/edit_profile.html'
 
     def get_success_url(self):
