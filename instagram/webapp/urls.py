@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import IndexListView, UserSearchView, FollowView
 
-from .views import PostCreateView, PostView, LikeView, CommentCreateView, PostDeleteView
+from .views import PostView, PostCreateView, LikeView, CommentCreateView, PostDeleteView 
 from .views import UserProfileView
 
 

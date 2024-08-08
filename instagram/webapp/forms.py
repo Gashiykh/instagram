@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import modelformset_factory
 
 from webapp.models import Post, Image, Comment
 
@@ -14,27 +13,28 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['description']
 
+    def clean_post(self):
+        cleaned_data = super().clean()
+        description = self.files.getlist('description')
+        if not description:
+            raise forms.ValidationError('Придумайте описание')
+        return cleaned_data
+    
 
-class MultipleFileInput(forms.ClearableFileInput):
-    allow_multiple_selected = True
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = Image
+        fields = ['image']
+        widgets = {
+            'image': forms.ClearableFileInput(attrs={"allow_multiple_selected": True})
+        }
 
-
-class MultipleFileField(forms.FileField):
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault("widget", MultipleFileInput())
-        super().__init__(*args, **kwargs)
-
-    def clean(self, data, initial=None):
-        single_file_clean = super().clean
-        if isinstance(data, (list, tuple)):
-            result = [single_file_clean(d, initial) for d in data]
-        else:
-            result = [single_file_clean(data, initial)]
-        return result
-
-
-class ImageForm(forms.Form):
-    images = MultipleFileField(label='Выберите картинки', required=False)
+    def clean(self):
+        cleaned_data = super().clean()
+        images = self.files.getlist('image')
+        if not images:
+            raise forms.ValidationError('Необходимо загрузить хотя бы одно изображение')
+        return cleaned_data
 
 
 class CommentForm(forms.ModelForm):

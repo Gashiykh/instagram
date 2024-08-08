@@ -30,38 +30,35 @@ class PostView(generic.DetailView):
         return context
 
 
-class PostCreateView(LoginRequiredMixin, generic.CreateView):
+class PostCreateView(CreateView):
     model = Post
     form_class = PostForm
     template_name = 'posts/create.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        data = super().get_context_data(**kwargs)
         if self.request.POST:
-            context['image_form'] = ImageForm(self.request.POST, self.request.FILES)
+            data['image_form'] = ImageForm(self.request.POST, self.request.FILES)
         else:
-            context['image_form'] = ImageForm()
-        return context
+            data['image_form'] = ImageForm()
+        return data
 
     def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.author = self.request.user
-        self.object.save()
-
         context = self.get_context_data()
         image_form = context['image_form']
         if image_form.is_valid():
-            images = self.request.FILES.getlist('images')
-            for image in images:
+            self.object = form.save(commit=False)
+            self.object.author = self.request.user
+            self.object.save()
+            for image in self.request.FILES.getlist('image'):
                 Image.objects.create(post=self.object, image=image)
-
-        user = self.request.user
-
-        user.post_count = F('post_count') + 1
-        user.save()
-
-        return super().form_valid(form)
-
+            user = self.request.user
+            user.post_count = F('post_count') + 1
+            user.save()
+            return redirect(self.get_success_url())
+        else:
+            return self.render_to_response(self.get_context_data(form=form, image_form=image_form))
+        
     def get_success_url(self):
         return reverse('profile', kwargs={'user_id': self.request.user.id})
 
@@ -103,6 +100,17 @@ class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
         if post.author != request.user:
             raise PermissionDenied()
         return super().dispatch(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        post = self.get_object()
+        author = post.author
+
+        response = super().delete(request, *args, **kwargs)
+
+        author.post_count = F('post_count') - 1
+        author.save()
+
+        return response
 
     def get_success_url(self):
         return reverse('home')
